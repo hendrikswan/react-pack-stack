@@ -1,4 +1,7 @@
+var webpack = require('webpack');
+
 module.exports = {
+  //devtool: 'eval',
   entry: {
     main: [
      'webpack-dev-server/client?http://localhost:8080',
@@ -8,8 +11,12 @@ module.exports = {
   },
   output: {
     filename: './public/main.js',
-    publicPath: '/'
+    publicPath: 'http://localhost:8080/'
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
   module: {
     loaders: [
       {
@@ -21,9 +28,9 @@ module.exports = {
         loader: 'style!css!sass'
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'react-hot!babel'
       }
     ]
   }

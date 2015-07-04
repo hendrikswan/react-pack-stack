@@ -19,5 +19,8 @@
     "watch": "webpack-dev-server --hot  --progress --colors"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "react": "^0.13.3"
+  }
 }
