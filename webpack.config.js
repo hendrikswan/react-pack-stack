@@ -9,5 +9,13 @@ module.exports = {
   output: {
     filename: './public/main.js',
     publicPath: '/'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.css$/,
+        loader: 'style!css'
+      }
+    ]
   }
 }
