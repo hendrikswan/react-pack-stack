@@ -1,4 +1,5 @@
 var React = require('react');
+require('./AuctionList.scss');
 
 class AuctionList extends React.Component {
     constructor(props){
