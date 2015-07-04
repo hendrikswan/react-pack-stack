@@ -1,1 +1,0 @@
-module.exports = 'hullo, I am a message from config';
