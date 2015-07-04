@@ -1,4 +1,4 @@
-require('./main.css');
+require('./main.scss');
 var msg = require('./config.js');
 document.write(msg);
 
