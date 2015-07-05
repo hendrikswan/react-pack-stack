@@ -1,4 +1,9 @@
 var React = require('react');
+var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
+var FloatingActionButton = mui.FloatingActionButton;
+var ThemeManager = new mui.Styles.ThemeManager();
+let Colors = mui.Styles.Colors;
 require('./AuctionList.scss');
 
 class AuctionList extends React.Component {
@@ -21,6 +26,25 @@ class AuctionList extends React.Component {
         };
     }
 
+
+    getChildContext() {
+        return {
+          muiTheme: ThemeManager.getCurrentTheme()
+        };
+    }
+
+    getChildContext() {
+        return {
+          muiTheme: ThemeManager.getCurrentTheme()
+        };
+    }
+
+    componentWillMount() {
+        ThemeManager.setPalette({
+          accent1Color: Colors.deepOrange500
+        });
+    }
+
     render(){
         var auctionNodes = this.state.auctions.map(function (auction) {
           return (
@@ -31,9 +55,17 @@ class AuctionList extends React.Component {
         return (
             <div className="AuctionList_list">
                 {auctionNodes}
+
+                <RaisedButton label="Default" />
+
+                <FloatingActionButton iconClassName="icon icon-plus" />
             </div>
         );
     }
 }
+
+AuctionList.childContextTypes = {
+    muiTheme: React.PropTypes.object
+};
 
 React.render(<AuctionList  />, document.getElementById('container'));
