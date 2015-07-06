@@ -88,13 +88,14 @@ class AuctionList extends React.Component {
 
         return (
             <div className="AuctionList">
+                {auctionNodes}
                 <FloatingActionButton style={{
                     position: 'absolute',
                     right: '30px',
-                    top: '30px'
+                    top: '30px',
+                    zIndex:100
                 }}
                 iconClassName="icon icon-plus" />
-                {auctionNodes}
             </div>
         );
     }
