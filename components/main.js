@@ -1,2 +1,1 @@
-require('./main.scss');
-require('./AuctionList/AuctionList.jsx');
+require('./App/App.jsx');
