@@ -15,42 +15,29 @@ var {
 } = mui;
 
 require('./AuctionList.scss');
+var Firebase = require('firebase');
 
 class AuctionList extends React.Component {
     constructor(props){
         super(props);
 
-        this.state={
-            auctions: [
-                {
-                    "title": "Vespa",
-                    "amount": 1000,
-                    "description" : "A black vespa",
-                    "expirationDate": '4 hours left'
-                },
-                {
-                    "title": "Vespa",
-                    "amount": 1000,
-                    "description" : "A black vespa",
-                    "expirationDate": '4 hours left'
-                },
-                {
-                    "title": "Vespa",
-                    "amount": 1000,
-                    "description" : "A black vespa",
-                    "expirationDate": '4 hours left'
-                },
-                {
-                    "title": "Vespa",
-                    "amount": 1000,
-                    "description" : "A black vespa",
-                    "expirationDate": '4 hours left'
-                }
-            ]
+        // this.auctions = [];
+        this.state= {
+            "auctions": []
         };
     }
 
 
+    componentWillMount(){
+        this.auctions = [];
+        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/auctions');
+        this.firebaseRef.on("value", function(dataSnapshot) {
+            this.auctions = dataSnapshot.val();
+            this.setState({
+                auctions: this.auctions
+            });
+        }.bind(this));
+    }
 
     render(){
         var auctionNodes = this.state.auctions.map(function (auction) {
@@ -77,10 +64,7 @@ class AuctionList extends React.Component {
                         <img src="http://lorempixel.com/380/200/nature?i={auction.title}"/>
                     </CardMedia>
                     <CardText>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                        {auction.description}
                     </CardText>
                 </Card>
             );
@@ -95,7 +79,9 @@ class AuctionList extends React.Component {
                     top: '30px',
                     zIndex:100
                 }}
-                iconClassName="icon icon-plus" />
+                iconClassName="icon icon-plus"
+                className="AuctionList_btn_new"
+                />
             </div>
         );
     }

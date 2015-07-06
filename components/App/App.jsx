@@ -44,7 +44,7 @@ class App extends React.Component {
     render(){
         return (
             <div className="AuctionApp">
-                <AppBar title='Title' iconClassNameRight="muidocs-icon-navigation-expand-more"/>
+                <AppBar title='Acme Corp Auctions' iconClassNameRight="muidocs-icon-navigation-expand-more"/>
                 <AuctionList />
             </div>
         );

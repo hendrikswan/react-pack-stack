@@ -24,5 +24,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "firebase": "^2.2.7"
   }
 }
