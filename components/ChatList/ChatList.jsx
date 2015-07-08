@@ -5,11 +5,8 @@ var {
     List,
     ListItem,
     ListDivider,
-    Avatar,
-    IconButton,
-    ToggleStarBorder,
+    Avatar
 } = mui;
-var Colors = mui.Styles.Colors;
 
 
 require('./ChatList.scss');
