@@ -1,16 +1,6 @@
 var React = require('react');
 var mui = require('material-ui');
 var {
-    FloatingActionButton,
-    RaisedButton,
-    Card,
-    CardHeader,
-    CardMedia,
-    CardTitle,
-    CardActions,
-    FlatButton,
-    CardText,
-    Avatar,
     AppBar
 } = mui;
 
@@ -18,7 +8,7 @@ var ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 
 require('./App.scss');
-var AuctionList = require('../AuctionList/AuctionList.jsx');
+var ChatList = require('../ChatList/ChatList.jsx');
 
 class App extends React.Component {
     constructor(props){
@@ -44,8 +34,8 @@ class App extends React.Component {
     render(){
         return (
             <div className="AuctionApp">
-                <AppBar title='Acme Corp Auctions' iconClassNameRight="muidocs-icon-navigation-expand-more"/>
-                <AuctionList />
+                <AppBar title='Acme Chat' iconClassNameRight="muidocs-icon-navigation-expand-more"/>
+                <ChatList />
             </div>
         );
     }
