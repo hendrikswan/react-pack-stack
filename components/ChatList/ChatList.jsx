@@ -26,22 +26,33 @@ class ChatList extends React.Component {
 
     componentWillMount(){
         this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/chats');
-        this.firebaseRef.on("value", function(dataSnapshot) {
-            debugger;
+        this.firebaseRef.once("value", (dataSnapshot) => {
             var val = dataSnapshot.val();
+
             this.setState({
                 chats: val
+            });
+        }.bind(this));
+
+        this.firebaseRef.on("child_added", (chatMsg) => {
+            this.state.chats[chatMsg.key()] = chatMsg.val();
+
+            this.setState({
+                chats: this.state.chats
             });
         }.bind(this));
     }
 
     render(){
-        var chatNodes = _(this.state.chats)
-        .values()
-        .map(function (chat) {
+        var chats = this.state.chats;
+        var chatNodes = _(chats)
+        .keys()
+        .map(function (k) {
+            var chat = chats[k];
+
             return (
                 <ListItem
-
+                  key={k}
                   leftAvatar={<Avatar src={chat.profilePic} />}
                   secondaryText={
                     <div className="ChatList_message_text">

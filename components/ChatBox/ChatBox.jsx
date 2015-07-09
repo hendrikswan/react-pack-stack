@@ -45,15 +45,16 @@ class ChatBox extends React.Component {
     onKeyUp(evt){
         if(evt.keyCode === 13 && trim(event.target.value) != ''){
             evt.preventDefault();
+            this.setState({
+                message: ''
+            });
+
+
             this.firebaseRef.push({
                 "message": event.target.value,
                 "date": new Date().toUTCString(),
                 "author": "Hendrik Swanepoel",
                 "profilePic": "http://www.gravatar.com/avatar/a424e1b0ab3a8dee82c25ae0f0804107?s=48&d=identicon"
-            });
-
-            this.setState({
-                message: ''
             });
         }
     }
