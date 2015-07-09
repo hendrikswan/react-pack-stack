@@ -24,6 +24,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "firebase": "^2.2.7"
+    "firebase": "^2.2.7",
+    "lodash": "^3.10.0",
+    "trim": "0.0.1"
   }
 }

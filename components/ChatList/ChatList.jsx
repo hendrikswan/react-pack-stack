@@ -1,5 +1,7 @@
 var React = require('react');
 var mui = require('material-ui');
+var _ = require('lodash');
+
 var {
     Card,
     List,
@@ -25,17 +27,21 @@ class ChatList extends React.Component {
     componentWillMount(){
         this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/chats');
         this.firebaseRef.on("value", function(dataSnapshot) {
+            debugger;
+            var val = dataSnapshot.val();
             this.setState({
-                chats: dataSnapshot.val()
+                chats: val
             });
         }.bind(this));
     }
 
     render(){
-        var chatNodes = this.state.chats.map(function (chat) {
+        var chatNodes = _(this.state.chats)
+        .values()
+        .map(function (chat) {
             return (
                 <ListItem
-                  className=""
+
                   leftAvatar={<Avatar src={chat.profilePic} />}
                   secondaryText={
                     <div className="ChatList_message_text">
@@ -54,7 +60,8 @@ class ChatList extends React.Component {
 
                 </ListItem>
             );
-        });
+        })
+        .value();
 
         return (
             <Card className="ChatList">

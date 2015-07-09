@@ -9,6 +9,7 @@ let Colors = mui.Styles.Colors;
 
 require('./App.scss');
 var ChatList = require('../ChatList/ChatList.jsx');
+var ChatBox = require('../ChatBox/ChatBox.jsx');
 
 class App extends React.Component {
     constructor(props){
@@ -36,6 +37,7 @@ class App extends React.Component {
             <div className="AuctionApp">
                 <AppBar title='Acme Chat' iconClassNameRight="muidocs-icon-navigation-expand-more"/>
                 <ChatList />
+                <ChatBox />
             </div>
         );
     }
