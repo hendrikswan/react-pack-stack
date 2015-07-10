@@ -8,9 +8,9 @@ var {
     TextField
 } = mui;
 
-require('./ChatBox.scss');
+require('./MessageBox.scss');
 
-class ChatBox extends React.Component {
+class MessageBox extends React.Component {
     constructor(props){
         super(props);
 
@@ -20,17 +20,17 @@ class ChatBox extends React.Component {
     }
 
     componentWillMount(){
-        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/chats');
+        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
     }
 
     render(){
         return (
-            <Card className="ChatBox">
+            <Card className="MessageBox">
                 <textarea
                     value={this.state.message}
                     onKeyUp={this.onKeyUp.bind(this)}
                     onChange={this.onChange.bind(this)}
-                    className="ChatBox_message" />
+                    className="MessageBox_message" />
             </Card>
 
         );
@@ -60,8 +60,8 @@ class ChatBox extends React.Component {
     }
 }
 
-ChatBox.childContextTypes = {
+MessageBox.childContextTypes = {
     muiTheme: React.PropTypes.object
 };
 
-module.exports = ChatBox;
+module.exports = MessageBox;

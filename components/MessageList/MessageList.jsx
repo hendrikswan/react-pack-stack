@@ -1,7 +1,7 @@
 var React = require('react');
 var mui = require('material-ui');
 var _ = require('lodash');
-
+var moment = require('moment');
 var {
     Card,
     List,
@@ -12,15 +12,15 @@ var {
 } = mui;
 
 
-require('./ChatList.scss');
+require('./MessageList.scss');
 var Firebase = require('firebase');
 
-class ChatList extends React.Component {
+class MessageList extends React.Component {
     constructor(props){
         super(props);
 
         this.state= {
-            "chats": [],
+            "messages": [],
             loading: true
         };
     }
@@ -40,22 +40,27 @@ class ChatList extends React.Component {
 
 
     componentWillMount(){
-        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/chats');
+        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
         this.firebaseRef.once("value", (dataSnapshot) => {
             var val = dataSnapshot.val();
 
+            _(val)
+              .values()
+              .each((msg)=> {
+                msg.ago = moment(msg.date).fromNow();
+              });
 
             this.setState({
-                chats: val,
+                messages: val,
                 loading: false
             });
         }.bind(this));
 
-        this.firebaseRef.on("child_added", (chatMsg) => {
-            this.state.chats[chatMsg.key()] = chatMsg.val();
+        this.firebaseRef.on("child_added", (msg) => {
+            this.state.messages[msg.key()] = msg.val();
 
             this.setState({
-                chats: this.state.chats
+                messages: this.state.messages
             });
         }.bind(this));
     }
@@ -63,7 +68,7 @@ class ChatList extends React.Component {
     render(){
         if(this.state.loading){
             return (
-            <Card className="ChatList">
+            <Card className="MessageList">
                 <div style={{
                     paddingTop: '20px',
                     paddingBottom: '20px',
@@ -77,28 +82,28 @@ class ChatList extends React.Component {
             );
         }
 
-        var chats = this.state.chats;
-        var chatNodes = _(chats)
+        var messages = this.state.messages;
+        var messageNodes = _(messages)
         .keys()
         .map(function (k) {
-            var chat = chats[k];
+            var message = messages[k];
 
             return (
                 <ListItem
                   key={k}
-                  leftAvatar={<Avatar src={chat.profilePic} />}
+                  leftAvatar={<Avatar src={message.profilePic} />}
                   secondaryText={
-                    <div className="ChatList_message_text">
-                        {chat.message}
+                    <div className="MessageList_message_text">
+                        {message.message}
                     </div>
                   }
                   secondaryTextLines={2}>
-                    <div className="ChatList_message">
-                        <div className="ChatList_message_author">
-                        {chat.author}
+                    <div className="MessageList_message">
+                        <div className="MessageList_message_author">
+                        {message.author}
                         </div>
-                        <div className="ChatList_message_date">
-                        {chat.date}
+                        <div className="MessageList_message_date">
+                        {message.ago}
                         </div>
                     </div>
 
@@ -108,9 +113,9 @@ class ChatList extends React.Component {
         .value();
 
         return (
-            <Card className="ChatList">
+            <Card className="MessageList">
                 <List subheader="Today">
-                {{chatNodes}}
+                {{messageNodes}}
                 </List>
             </Card>
 
@@ -118,8 +123,8 @@ class ChatList extends React.Component {
     }
 }
 
-ChatList.childContextTypes = {
+MessageList.childContextTypes = {
     muiTheme: React.PropTypes.object
 };
 
-module.exports = ChatList;
+module.exports = MessageList;

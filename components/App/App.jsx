@@ -8,8 +8,8 @@ var ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 
 require('./App.scss');
-var ChatList = require('../ChatList/ChatList.jsx');
-var ChatBox = require('../ChatBox/ChatBox.jsx');
+var MessageList = require('../MessageList/MessageList.jsx');
+var MessageBox = require('../MessageBox/MessageBox.jsx');
 var Login = require('../Login/Login.jsx');
 
 class App extends React.Component {
@@ -37,9 +37,8 @@ class App extends React.Component {
         return (
             <div className="AuctionApp">
                 <AppBar title='Acme Chat' iconClassNameRight="muidocs-icon-navigation-expand-more"/>
-                <Login />
-                <ChatList />
-                <ChatBox />
+                <MessageList />
+                <MessageBox />
             </div>
         );
     }
