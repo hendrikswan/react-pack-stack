@@ -42,13 +42,14 @@ class MessageList extends React.Component {
     componentWillMount(){
         this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
         this.firebaseRef.once("value", (dataSnapshot) => {
-            var val = dataSnapshot.val();
+            let val = dataSnapshot.val();
 
             _(val)
               .values()
               .each((msg)=> {
-                msg.ago = moment(msg.date).fromNow();
-              });
+                msg.ago = moment(new Date(msg.date)).fromNow();
+              })
+              .value();
 
             this.setState({
                 messages: val,
@@ -57,7 +58,9 @@ class MessageList extends React.Component {
         }.bind(this));
 
         this.firebaseRef.on("child_added", (msg) => {
-            this.state.messages[msg.key()] = msg.val();
+            let msgVal = msg.val()
+            msgVal.ago = moment(new Date(msgVal.date)).fromNow();
+            this.state.messages[msg.key()] = msgVal;
 
             this.setState({
                 messages: this.state.messages
