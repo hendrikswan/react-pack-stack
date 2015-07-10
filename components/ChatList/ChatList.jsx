@@ -7,7 +7,8 @@ var {
     List,
     ListItem,
     ListDivider,
-    Avatar
+    Avatar,
+    CircularProgress
 } = mui;
 
 
@@ -19,9 +20,23 @@ class ChatList extends React.Component {
         super(props);
 
         this.state= {
-            "chats": []
+            "chats": [],
+            loading: true
         };
     }
+
+    // componentWillUpdate() {
+    //     debugger;
+    //   var node = React.findDOMNode (this);
+    //   this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+    // }
+
+    // componentDidUpdate() {
+    //   if (this.shouldScrollBottom) {
+    //     var node = React.findDOMNode (this);
+    //     node.scrollTop = node.scrollHeight
+    //   }
+    // }
 
 
     componentWillMount(){
@@ -29,8 +44,10 @@ class ChatList extends React.Component {
         this.firebaseRef.once("value", (dataSnapshot) => {
             var val = dataSnapshot.val();
 
+
             this.setState({
-                chats: val
+                chats: val,
+                loading: false
             });
         }.bind(this));
 
@@ -44,6 +61,22 @@ class ChatList extends React.Component {
     }
 
     render(){
+        if(this.state.loading){
+            return (
+            <Card className="ChatList">
+                <div style={{
+                    paddingTop: '20px',
+                    paddingBottom: '20px',
+                    margin: '0 auto',
+                    display: 'block',
+                    width: '160px'
+                }}>
+                    <CircularProgress mode="indeterminate" />
+                </div>
+            </Card>
+            );
+        }
+
         var chats = this.state.chats;
         var chatNodes = _(chats)
         .keys()
