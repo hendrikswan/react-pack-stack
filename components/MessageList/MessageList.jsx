@@ -2,6 +2,8 @@ var React = require('react');
 var mui = require('material-ui');
 var _ = require('lodash');
 var moment = require('moment');
+import $ from 'webpack-zepto';
+
 var {
     Card,
     List,
@@ -25,18 +27,17 @@ class MessageList extends React.Component {
         };
     }
 
-    // componentWillUpdate() {
-    //     debugger;
-    //   var node = React.findDOMNode (this);
-    //   this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
-    // }
+    componentWillUpdate() {
+      debugger;
+      var node = React.findDOMNode (this);
+      this.shouldScrollBottom = $(window).scrollTop() + $(window).height() === $(document).height();
+    }
 
-    // componentDidUpdate() {
-    //   if (this.shouldScrollBottom) {
-    //     var node = React.findDOMNode (this);
-    //     node.scrollTop = node.scrollHeight
-    //   }
-    // }
+    componentDidUpdate() {
+      if (this.shouldScrollBottom) {
+        $('html, body').scrollTop( $(document).height());
+      }
+    }
 
 
     componentWillMount(){
