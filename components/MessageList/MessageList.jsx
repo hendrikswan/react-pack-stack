@@ -22,15 +22,18 @@ class MessageList extends React.Component {
         super(props);
 
         this.state= {
-            "messages": [],
+            messages: [],
             loading: true
         };
     }
 
     componentWillUpdate() {
-      debugger;
       var node = React.findDOMNode (this);
-      this.shouldScrollBottom = $(window).scrollTop() + $(window).height() === $(document).height();
+      this.shouldScrollBottom = this.firstLoad ||
+        $(window).scrollTop() + $(window).height() === $(document).height();
+      if(this.firstLoad){
+        this.firstLoad = false;
+      }
     }
 
     componentDidUpdate() {
@@ -52,10 +55,12 @@ class MessageList extends React.Component {
               })
               .value();
 
+            this.firstLoad = true;
             this.setState({
                 messages: val,
                 loading: false
             });
+
         }.bind(this));
 
         this.firebaseRef.on("child_added", (msg) => {
