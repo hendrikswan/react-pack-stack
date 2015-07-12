@@ -4,6 +4,7 @@ var _ = require('lodash');
 var $ = require('webpack-zepto');
 var MessageStore = require('../../stores/MessageStore');
 require('./MessageList.scss');
+var Message = require('../Message/Message.jsx');
 
 var {
     Card,
@@ -47,7 +48,6 @@ class MessageList extends React.Component {
     }
 
     onChange(){
-
       this.firstLoad = this.state.loading;
 
       this.setState({
@@ -59,7 +59,6 @@ class MessageList extends React.Component {
 
     componentWillMount(){
         MessageStore.addChangeListener(this.onChange.bind(this));
-        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
     }
 
     render(){
@@ -82,27 +81,9 @@ class MessageList extends React.Component {
         .keys()
         .map(function (k) {
             var message = messages[k];
-
+            message.key = k;
             return (
-                <ListItem
-                  key={k}
-                  leftAvatar={<Avatar src={message.profilePic} />}
-                  secondaryText={
-                    <div className="MessageList_message_text">
-                        {message.message}
-                    </div>
-                  }
-                  secondaryTextLines={2}>
-                    <div className="MessageList_message">
-                        <div className="MessageList_message_author">
-                        {message.author}
-                        </div>
-                        <div className="MessageList_message_date">
-                        {message.ago}
-                        </div>
-                    </div>
-
-                </ListItem>
+              <Message message={message} />
             );
         })
         .value();
@@ -119,8 +100,7 @@ class MessageList extends React.Component {
 }
 
 MessageList.childContextTypes = {
-    muiTheme: React.PropTypes.object,
-    auth: React.PropTypes.object
+    muiTheme: React.PropTypes.object
 };
 
 module.exports = MessageList;
