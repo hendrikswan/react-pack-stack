@@ -57,7 +57,10 @@ class App extends React.Component {
 
         return (
             <div>
-                <AppBar title='Acme Chat' />
+                <AppBar style={{
+                  position: 'fixed',
+                  top: 0
+                }} title='Acme Chat' />
                 {{view}}
             </div>
         );
