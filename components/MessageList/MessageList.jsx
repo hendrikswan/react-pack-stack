@@ -54,10 +54,6 @@ class MessageList extends React.Component {
         messages: MessageStore.getMessages(),
         loading: false
       });
-
-
-
-
     }
 
 
@@ -113,7 +109,7 @@ class MessageList extends React.Component {
 
         return (
             <Card className="MessageList">
-                <List subheader="Today">
+                <List>
                 {{messageNodes}}
                 </List>
             </Card>
