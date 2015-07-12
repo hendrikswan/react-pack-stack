@@ -9,7 +9,7 @@ var _ = require('lodash');
 class Store extends EventEmitter {
   constructor(){
     super();
-    this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
+    this.messagesRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
     this.registerWithDispatcher();
     this.registerWithFirebase();
   }
@@ -21,7 +21,7 @@ class Store extends EventEmitter {
   registerWithFirebase(){
     this.messages = {};
 
-    this.firebaseRef.once("value", (dataSnapshot) => {
+    this.messagesRef.once("value", (dataSnapshot) => {
       this.messages = dataSnapshot.val();
 
       _(this.messages)
@@ -33,7 +33,7 @@ class Store extends EventEmitter {
 
       this.emit(CHANGE_EVENT);
 
-      this.firebaseRef.on("child_added", (msg) => {
+      this.messagesRef.on("child_added", (msg) => {
         if(this.messages[msg.key()]){
           return;
         }
@@ -65,11 +65,17 @@ class Store extends EventEmitter {
   readMessage(message){
     message.isRead = true;
 
+    var msgRef = this.messagesRef.child(message.key);
+
+    msgRef.update({
+      isRead: true
+    });
+
     this.emit(CHANGE_EVENT);
   }
 
   sendMessage(message){
-    this.firebaseRef.push({
+    this.messagesRef.push({
         "message": message,
         "date": new Date().toUTCString(),
         "author": "Hendrik Swanepoel",
