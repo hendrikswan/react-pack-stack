@@ -1,8 +1,11 @@
 var React = require('react');
 var mui = require('material-ui');
 var Firebase = require('Firebase');
+require('./Login.scss');
 
 var {
+    Card,
+    CardText,
     RaisedButton
 } = mui;
 
@@ -12,8 +15,8 @@ class Login extends React.Component {
         super(props);
 
         this.state = {
-            success: false,
-            failed: false
+            result: '',
+            message: ''
         };
     }
 
@@ -24,19 +27,31 @@ class Login extends React.Component {
     onClick(){
       this.firebaseRef.authWithOAuthPopup("google", (error, authData) => {
         if (error) {
-          console.log("Login Failed!", error);
-          this.setState({success: false, failed: true});
-        } else {
-          this.setState({success: true, failed: false});
-          console.log("Authenticated successfully with payload:", authData);
+          return this.SetState({
+            result: 'failed',
+            message: 'We could not log you in'
+          });
         }
+
+        if(this.props.loginSuccess)
+          return this.props.loginSuccess(authData);
       });
     }
 
     render(){
 
         return (
-            <RaisedButton onClick={this.onClick.bind(this)} label="Primary" primary={true} />
+
+            <Card className="Login_card">
+              <CardText className="Login_copy">
+                To start chatting away, please log in with your Google account.
+              </CardText>
+              <RaisedButton style={{
+                display: 'block',
+              }} onClick={this.onClick.bind(this)} label="Log in with Google" primary={true} />
+
+
+            </Card>
 
         );
     }
@@ -45,5 +60,6 @@ class Login extends React.Component {
 Login.childContextTypes = {
     muiTheme: React.PropTypes.object
 };
+
 
 module.exports = Login;

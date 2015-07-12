@@ -25,6 +25,8 @@ class MessageList extends React.Component {
             messages: [],
             loading: true
         };
+
+        console.log(props.auth);
     }
 
     componentWillUpdate() {
@@ -131,7 +133,8 @@ class MessageList extends React.Component {
 }
 
 MessageList.childContextTypes = {
-    muiTheme: React.PropTypes.object
+    muiTheme: React.PropTypes.object,
+    auth: React.PropTypes.object
 };
 
 module.exports = MessageList;

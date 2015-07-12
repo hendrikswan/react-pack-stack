@@ -15,6 +15,10 @@ var Login = require('../Login/Login.jsx');
 class App extends React.Component {
     constructor(props){
         super(props);
+
+        this.state = {
+          auth: false
+        }
     }
 
 
@@ -33,12 +37,28 @@ class App extends React.Component {
         });
     }
 
+    loginSuccess(auth){
+      this.setState({
+        auth: auth
+      });
+    }
+
     render(){
+        let view = <Login loginSuccess={this.loginSuccess.bind(this)} />;
+
+        if(this.state.auth){
+          view = (
+            <div>
+              <MessageList auth={this.state.auth} />
+              <MessageBox auth={this.state.auth} />
+            </div>
+          );
+        }
+
         return (
-            <div className="AuctionApp">
-                <AppBar title='Acme Chat' iconClassNameRight="muidocs-icon-navigation-expand-more"/>
-                <MessageList />
-                <MessageBox />
+            <div>
+                <AppBar title='Acme Chat' />
+                {{view}}
             </div>
         );
     }
