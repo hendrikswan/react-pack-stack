@@ -1,8 +1,9 @@
 var React = require('react');
 var mui = require('material-ui');
 var _ = require('lodash');
-var moment = require('moment');
 var $ = require('webpack-zepto');
+var MessageStore = require('../../stores/MessageStore');
+require('./MessageList.scss');
 
 var {
     Card,
@@ -14,8 +15,6 @@ var {
 } = mui;
 
 
-require('./MessageList.scss');
-var Firebase = require('firebase');
 
 class MessageList extends React.Component {
     constructor(props){
@@ -25,8 +24,6 @@ class MessageList extends React.Component {
             messages: [],
             loading: true
         };
-
-        console.log(props.auth);
     }
 
     componentWillUpdate() {
@@ -45,35 +42,28 @@ class MessageList extends React.Component {
     }
 
 
+    componentWillUnmount() {
+      MessageStore.removeChangeListener(this.onChange);
+    }
+
+    onChange(){
+
+      this.firstLoad = this.state.loading;
+
+      this.setState({
+        messages: MessageStore.getMessages(),
+        loading: false
+      });
+
+
+
+
+    }
+
+
     componentWillMount(){
+        MessageStore.addChangeListener(this.onChange.bind(this));
         this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
-        this.firebaseRef.once("value", (dataSnapshot) => {
-            let val = dataSnapshot.val();
-
-            _(val)
-              .values()
-              .each((msg)=> {
-                msg.ago = moment(new Date(msg.date)).fromNow();
-              })
-              .value();
-
-            this.firstLoad = true;
-            this.setState({
-                messages: val,
-                loading: false
-            });
-
-        }.bind(this));
-
-        this.firebaseRef.on("child_added", (msg) => {
-            let msgVal = msg.val()
-            msgVal.ago = moment(new Date(msgVal.date)).fromNow();
-            this.state.messages[msg.key()] = msgVal;
-
-            this.setState({
-                messages: this.state.messages
-            });
-        }.bind(this));
     }
 
     render(){

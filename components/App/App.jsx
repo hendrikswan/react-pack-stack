@@ -46,14 +46,14 @@ class App extends React.Component {
     render(){
         let view = <Login loginSuccess={this.loginSuccess.bind(this)} />;
 
-        if(this.state.auth){
+        //if(this.state.auth){
           view = (
             <div>
               <MessageList auth={this.state.auth} />
               <MessageBox auth={this.state.auth} />
             </div>
           );
-        }
+      //  }
 
         return (
             <div>

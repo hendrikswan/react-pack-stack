@@ -21,6 +21,11 @@ class Login extends React.Component {
     }
 
     componentWillMount(){
+        // var auth = localStorage.getItem('auth');
+        // if(auth){
+        //
+        // }
+      
         this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com');
     }
 
