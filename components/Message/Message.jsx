@@ -2,7 +2,7 @@ var React = require('react');
 var mui = require('material-ui');
 var _ = require('lodash');
 var $ = require('webpack-zepto');
-var MessageStore = require('../../stores/MessageStore');
+var AppActions = require('../../actions');
 require('./Message.scss');
 
 var {
@@ -34,6 +34,7 @@ class Message extends React.Component {
 
         var readHandler = () => {
           if(this.isInViewport(node)){
+            AppActions.readMessage(this.props.message);
             console.log('message ' + this.props.message.message + ' read!');
             $(window).off('scroll', readHandler);
           }

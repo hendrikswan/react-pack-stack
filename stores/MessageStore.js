@@ -4,6 +4,7 @@ var AppConstants = require('../constants');
 var Firebase = require('Firebase');
 var moment = require('moment');
 var CHANGE_EVENT = 'change';
+var _ = require('lodash');
 
 class Store extends EventEmitter {
   constructor(){
@@ -53,8 +54,18 @@ class Store extends EventEmitter {
           var message = action.message;
           this.sendMessage(message);
           break;
+        case AppConstants.CHAT_READ_MESSAGE:
+          var message = action.message;
+          this.readMessage(message);
+          break;
       }
     });
+  }
+
+  readMessage(message){
+    message.isRead = true;
+
+    this.emit(CHANGE_EVENT);
   }
 
   sendMessage(message){
@@ -76,6 +87,10 @@ class Store extends EventEmitter {
 
   getMessages(){
     return this.messages;
+  }
+
+  getUnreadCount(){
+    return _.filter(this.messages, m => !m.isRead).length;
   }
 
 }

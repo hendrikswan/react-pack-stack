@@ -8,6 +8,13 @@ class Actions {
       message: message
     });
   }
+
+  readMessage(message){
+    AppDispatcher.dispatch({
+      actionType: AppConstants.CHAT_READ_MESSAGE,
+      message: message
+    });
+  }
 }
 
 module.exports = new Actions();

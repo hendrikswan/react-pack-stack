@@ -12,7 +12,8 @@ var {
     ListItem,
     ListDivider,
     Avatar,
-    CircularProgress
+    CircularProgress,
+    CardText
 } = mui;
 
 
@@ -51,6 +52,7 @@ class MessageList extends React.Component {
 
       this.setState({
         messages: MessageStore.getMessages(),
+        unreadCount: MessageStore.getUnreadCount(),
         loading: false
       });
     }
@@ -89,9 +91,11 @@ class MessageList extends React.Component {
 
         return (
             <Card className="MessageList">
-                <List>
-                {{messageNodes}}
-                </List>
+              <CardText>You have {this.state.unreadCount} unread messages.</CardText>
+              <List>
+              {{messageNodes}}
+              </List>
+              <CardText>You have {this.state.unreadCount} unread messages.</CardText>
             </Card>
 
         );
