@@ -2,6 +2,7 @@ var React = require('react');
 var mui = require('material-ui');
 var trim = require('trim');
 var Firebase = require('Firebase');
+var AppActions = require('../../actions');
 
 var {
     Card,
@@ -19,9 +20,6 @@ class MessageBox extends React.Component {
         };
     }
 
-    componentWillMount(){
-        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
-    }
 
     render(){
         return (
@@ -50,12 +48,15 @@ class MessageBox extends React.Component {
             });
 
 
-            this.firebaseRef.push({
-                "message": event.target.value,
-                "date": new Date().toUTCString(),
-                "author": "Hendrik Swanepoel",
-                "profilePic": "http://www.gravatar.com/avatar/a424e1b0ab3a8dee82c25ae0f0804107?s=48&d=identicon"
-            });
+            AppActions.sendMessage(event.target.value);
+
+
+            // this.firebaseRef.push({
+            //     "message": event.target.value,
+            //     "date": new Date().toUTCString(),
+            //     "author": "Hendrik Swanepoel",
+            //     "profilePic": "http://www.gravatar.com/avatar/a424e1b0ab3a8dee82c25ae0f0804107?s=48&d=identicon"
+            // });
         }
     }
 }

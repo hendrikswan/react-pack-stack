@@ -2,7 +2,7 @@ var React = require('react');
 var mui = require('material-ui');
 var _ = require('lodash');
 var moment = require('moment');
-import $ from 'webpack-zepto';
+var $ = require('webpack-zepto');
 
 var {
     Card,
