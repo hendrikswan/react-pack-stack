@@ -31,12 +31,15 @@ class Message extends React.Component {
     componentDidMount() {
       if(!this.props.message.isRead){
         var node = React.findDOMNode (this);
-        
-        $(window).scroll(()=> {
+
+        var readHandler = () => {
           if(this.isInViewport(node)){
             console.log('message ' + this.props.message.message + ' read!');
+            $(window).off('scroll', readHandler);
           }
-        });
+        }
+
+        $(window).on('scroll', readHandler);
         // var node = React.findDOMNode (this);
         // $(node).scroll(()=> {
         //   console.log('scrolled!');
