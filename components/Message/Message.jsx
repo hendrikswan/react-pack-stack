@@ -17,6 +17,33 @@ class Message extends React.Component {
         super(props);
     }
 
+    isInViewport (el) {
+        var rect = el.getBoundingClientRect();
+
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <=  $(window).height() &&
+            rect.right <= $(window).width()
+        );
+    }
+
+    componentDidMount() {
+      if(!this.props.message.isRead){
+        var node = React.findDOMNode (this);
+        
+        $(window).scroll(()=> {
+          if(this.isInViewport(node)){
+            console.log('message ' + this.props.message.message + ' read!');
+          }
+        });
+        // var node = React.findDOMNode (this);
+        // $(node).scroll(()=> {
+        //   console.log('scrolled!');
+        // });
+      }
+    }
+
     render(){
       var message = this.props.message;
       return (

@@ -42,7 +42,6 @@ class MessageList extends React.Component {
       }
     }
 
-
     componentWillUnmount() {
       MessageStore.removeChangeListener(this.onChange);
     }
