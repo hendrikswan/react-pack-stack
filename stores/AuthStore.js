@@ -31,7 +31,7 @@ class AuthStore extends EventEmitter {
         error: error
       };
 
-      localStorage.setItem('auth', JSON.stringify(authData));
+      localStorage.setItem('auth', JSON.stringify(this.authInfo));
       this.emit(CHANGE_EVENT);
     });
   }

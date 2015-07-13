@@ -97,11 +97,9 @@ class MessageList extends React.Component {
 
         return (
             <Card className="MessageList" style={cardStyle}>
-              <CardText>You have {this.state.unreadCount} unread messages.</CardText>
               <List>
               {{messageNodes}}
               </List>
-              <CardText>You have {this.state.unreadCount} unread messages.</CardText>
             </Card>
 
         );
