@@ -5,18 +5,16 @@ var Firebase = require('Firebase');
 var moment = require('moment');
 var CHANGE_EVENT = 'change';
 var _ = require('lodash');
+var AuthStore = require('./AuthStore');
 
 class Store extends EventEmitter {
   constructor(){
     super();
     this.messagesRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
     this.registerWithDispatcher();
-    this.registerWithFirebase();
-  }
 
-  // setAuth(auth){
-  //   this.auth = auth;
-  // }
+    AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
+  }
 
   registerWithFirebase(){
     this.messages = {};
@@ -61,6 +59,8 @@ class Store extends EventEmitter {
       }
     });
   }
+
+
 
   readMessage(message){
     message.isRead = true;

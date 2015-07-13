@@ -15,6 +15,12 @@ class Actions {
       message: message
     });
   }
+
+  startAuth(){
+    AppDispatcher.dispatch({
+      actionType: AppConstants.AUTH_START
+    });
+  }
 }
 
 module.exports = new Actions();

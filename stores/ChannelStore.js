@@ -3,13 +3,15 @@ var EventEmitter = require('events').EventEmitter;
 var AppConstants = require('../constants');
 var Firebase = require('Firebase');
 var CHANGE_EVENT = 'change';
+var AuthStore = require('./AuthStore');
+
 
 class Store extends EventEmitter {
   constructor(){
     super();
     this.channelsRef = new Firebase('https://fiery-torch-9637.firebaseio.com/channels');
     this.registerWithDispatcher();
-    this.registerWithFirebase();
+    AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
   }
 
 

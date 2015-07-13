@@ -12,6 +12,7 @@ var MessageList = require('../MessageList/MessageList.jsx');
 var ChannelList = require('../ChannelList/ChannelList.jsx');
 var MessageBox = require('../MessageBox/MessageBox.jsx');
 var Login = require('../Login/Login.jsx');
+var AuthStore = require('../../stores/AuthStore');
 
 class App extends React.Component {
     constructor(props){
@@ -36,18 +37,32 @@ class App extends React.Component {
           primary3Color: Colors.blue100,
           accent1Color: Colors.pink400
         });
+
+        AuthStore.addChangeListener(this.getAuthChangeHandler());
     }
 
-    loginSuccess(auth){
-      this.setState({
-        auth: auth
-      });
+
+    componentWillUnmount() {
+        AuthStore.removeChangeListener(this.getAuthChangeHandler());
+    }
+
+
+    getAuthChangeHandler(){
+      this.authChangeHandler = this.authChangeHandler || (function(){
+        var authInfo = AuthStore.getAuthInfo();
+        this.setState({
+          authError: authInfo.error,
+          user: authInfo.user
+        })
+      }).bind(this);
+
+      return this.authChangeHandler;
     }
 
     render(){
-        let view = <Login loginSuccess={this.loginSuccess.bind(this)} />;
-
-        //if(this.state.auth){
+        let view = <Login />;
+        debugger;
+        if(this.state.user){
           view = (
             <div>
               <div style={{
@@ -64,10 +79,12 @@ class App extends React.Component {
               <MessageBox auth={this.state.auth} />
             </div>
           );
-      //  }
+        }
 
         return (
-            <div>
+            <div style={{
+              paddingTop: 100
+            }}>
                 <AppBar style={{
                     position: 'fixed',
                     top: 0

@@ -59,7 +59,7 @@ class MessageList extends React.Component {
 
 
     componentWillMount(){
-        MessageStore.addChangeListener(this.onChange.bind(this));
+        MessageStore.addChangeListener(this.onChange.bind(this)); //will it unbind correctly then?
     }
 
     render(){

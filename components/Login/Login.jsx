@@ -1,6 +1,7 @@
 var React = require('react');
 var mui = require('material-ui');
 var Firebase = require('Firebase');
+var AppActions = require('../../actions');
 require('./Login.scss');
 
 var {
@@ -20,27 +21,9 @@ class Login extends React.Component {
         };
     }
 
-    componentWillMount(){
-        // var auth = localStorage.getItem('auth');
-        // if(auth){
-        //
-        // }
-      
-        this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com');
-    }
 
     onClick(){
-      this.firebaseRef.authWithOAuthPopup("google", (error, authData) => {
-        if (error) {
-          return this.SetState({
-            result: 'failed',
-            message: 'We could not log you in'
-          });
-        }
-
-        if(this.props.loginSuccess)
-          return this.props.loginSuccess(authData);
-      });
+      AppActions.startAuth();
     }
 
     render(){
