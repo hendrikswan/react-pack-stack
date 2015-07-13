@@ -61,7 +61,7 @@ class App extends React.Component {
 
     render(){
         let view = <Login />;
-        if(this.state.user){
+        if(this.state.auth){
           view = (
             <div>
               <div style={{

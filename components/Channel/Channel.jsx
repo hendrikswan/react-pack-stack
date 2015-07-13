@@ -27,8 +27,15 @@ class Channel extends React.Component {
 
 
     render(){
+      var style = {};
+
+      if(this.props.channel.selected){
+        style.backgroundColor = '#F0F0F0';
+      }
+
       return (
         <ListItem
+          style={style}
           key={this.props.channel.key}
           onClick={this.onClick.bind(this)}
           >

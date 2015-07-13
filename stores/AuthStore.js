@@ -7,9 +7,12 @@ var CHANGE_EVENT = 'change';
 class AuthStore extends EventEmitter {
   constructor(){
     super();
+    debugger;
     this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com');
     this.registerWithDispatcher();
-    this.authInfo = JSON.parse(localStorage.getItem('auth'));
+    if(localStorage.getItem('auth')){
+      this.authInfo = JSON.parse(localStorage.getItem('auth'));
+    }
   }
 
   registerWithDispatcher(){

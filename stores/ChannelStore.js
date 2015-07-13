@@ -10,7 +10,6 @@ var _ = require('lodash');
 class ChannelStore extends EventEmitter {
   constructor(){
     super();
-    debugger;
     this.channelsRef = new Firebase('https://fiery-torch-9637.firebaseio.com/channels');
     this.registerWithDispatcher();
     AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
