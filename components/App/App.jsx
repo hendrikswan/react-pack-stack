@@ -51,8 +51,7 @@ class App extends React.Component {
       this.authChangeHandler = this.authChangeHandler || (function(){
         var authInfo = AuthStore.getAuthInfo();
         this.setState({
-          authError: authInfo.error,
-          user: authInfo.user
+          auth: authInfo
         })
       }).bind(this);
 

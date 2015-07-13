@@ -44,13 +44,22 @@ class ChannelList extends React.Component {
 
 
     componentWillMount(){
-        ChannelStore.addChangeListener(this.onChange.bind(this));
+      var channels = ChannelStore.getChannels();
+      if(channels){
+        this.setState({
+          channels: channels,
+          loading: false
+        });
+      }
+      ChannelStore.addChangeListener(this.onChange.bind(this));
     }
 
     render(){
         if(this.state.loading){
             return (
-            <Card>
+              <Card style={{
+                flexGrow: 1
+              }}>
               <CircularProgress mode="indeterminate" style={{
                 paddingTop: '20px',
                 paddingBottom: '20px',

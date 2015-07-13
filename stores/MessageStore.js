@@ -12,7 +12,7 @@ class MessageStore extends EventEmitter {
   constructor(){
     super();
     this.registerWithDispatcher();
-
+    this.messages = {};
     //AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
     ChannelStore.addChangeListener(this.channelSelected.bind(this));
   }
@@ -21,8 +21,8 @@ class MessageStore extends EventEmitter {
     this.channel = ChannelStore.getSelectedChannel();
 
     if(!this.channel) return;
-
     this.messages = {};
+
     this.authInfo = AuthStore.getAuthInfo();
     if(this.messageRef){
       this.messageRef.off();
@@ -34,8 +34,10 @@ class MessageStore extends EventEmitter {
       this.messages = dataSnapshot.val();
 
       _(this.messages)
-        .values()
-        .each((msg)=> {
+        .keys()
+        .each((k)=> {
+          let msg = this.messages[k];
+          msg.key = k;
           msg.ago = moment(new Date(msg.date)).fromNow();
         })
         .value();
@@ -51,6 +53,7 @@ class MessageStore extends EventEmitter {
 
       let msgVal = msg.val()
       msgVal.ago = moment(new Date(msgVal.date)).fromNow();
+      msgVal.key = msg.key();
       this.messages[msg.key()] = msgVal;
       this.emit(CHANGE_EVENT);
     }).bind(this));
@@ -105,6 +108,10 @@ class MessageStore extends EventEmitter {
   }
 
   getMessages(){
+    if(!_.keys(this.messages).length){
+      return null;
+    }
+    
     return this.messages;
   }
 

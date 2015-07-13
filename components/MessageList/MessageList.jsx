@@ -59,7 +59,14 @@ class MessageList extends React.Component {
 
 
     componentWillMount(){
-        MessageStore.addChangeListener(this.onChange.bind(this)); //will it unbind correctly then?
+      var messages = MessageStore.getMessages();
+      if(messages){
+        this.setState({
+          messages: messages,
+          loading: false
+        });
+      }
+      MessageStore.addChangeListener(this.onChange.bind(this)); //will it unbind correctly then?
     }
 
     render(){
@@ -85,10 +92,8 @@ class MessageList extends React.Component {
 
         var messages = this.state.messages;
         var messageNodes = _(messages)
-        .keys()
-        .map(function (k) {
-            var message = messages[k];
-            message.key = k;
+        .values()
+        .map(function (message) {
             return (
               <Message message={message} />
             );

@@ -21,7 +21,7 @@ class ChannelStore extends EventEmitter {
     this.channels = {};
 
     this.channelsRef.once("value", (dataSnapshot) => {
-      this.channels = dataSnapshot.val()
+      this.channels = dataSnapshot.val();
       _(this.channels)
         .keys()
         .each((k, i)=> {
@@ -86,6 +86,9 @@ class ChannelStore extends EventEmitter {
   }
 
   getChannels(){
+    if(!_.keys(this.channels).length){
+      return null;
+    }
     return this.channels;
   }
 
