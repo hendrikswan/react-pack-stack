@@ -21,7 +21,17 @@ class ChannelStore extends EventEmitter {
     this.channels = {};
 
     this.channelsRef.once("value", (dataSnapshot) => {
-      this.channels = dataSnapshot.val();
+      this.channels = dataSnapshot.val()
+      _(this.channels)
+        .keys()
+        .each((k, i)=> {
+          this.channels[k].key = k;
+          if(i == 0){
+            this.channels[k].selected = true;
+          }
+        })
+        .value();
+
       this.emit(CHANGE_EVENT);
     });
 
@@ -32,7 +42,8 @@ class ChannelStore extends EventEmitter {
 
 
       let channelVal = channel.val()
-      this.channels[channel.key()] = channelVal;
+      channelVal.key = channel.key();
+      this.channels[channelVal.key] = channelVal;
       this.emit(CHANGE_EVENT);
     });
   }
@@ -59,7 +70,6 @@ class ChannelStore extends EventEmitter {
   }
 
   selectChannel(channel){
-    this.selectedChannel = channel;
     _(this.channels)
       .keys()
       .each((k)=> {
@@ -80,7 +90,7 @@ class ChannelStore extends EventEmitter {
   }
 
   getSelectedChannel(){
-    return this.selectedChannel;
+    return _.find(this.channels, {selected: true});
   }
 }
 
