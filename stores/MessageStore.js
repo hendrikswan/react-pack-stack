@@ -6,21 +6,31 @@ var moment = require('moment');
 var CHANGE_EVENT = 'change';
 var _ = require('lodash');
 var AuthStore = require('./AuthStore');
+var ChannelStore = require('./ChannelStore');
 
 class MessageStore extends EventEmitter {
   constructor(){
     super();
-    this.messagesRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
     this.registerWithDispatcher();
 
-    AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
+    //AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
+    ChannelStore.addChangeListener(this.channelSelected.bind(this));
   }
 
-  registerWithFirebase(){
+  channelSelected(){
+    this.channel = ChannelStore.getSelectedChannel();
+
+    if(!this.channel) return;
+
     this.messages = {};
     this.authInfo = AuthStore.getAuthInfo();
+    if(this.messageRef){
+      this.messageRef.off();
+    }
 
-    this.messagesRef.once("value", (dataSnapshot) => {
+    this.messagesRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages/' + this.channel.key );
+
+    this.messagesRef.once("value", ((dataSnapshot) => {
       this.messages = dataSnapshot.val();
 
       _(this.messages)
@@ -31,9 +41,9 @@ class MessageStore extends EventEmitter {
         .value();
 
       this.emit(CHANGE_EVENT);
-    });
+    }).bind(this));
 
-    this.messagesRef.on("child_added", (msg) => {
+    this.messagesRef.on("child_added", ((msg) => {
       if(this.messages[msg.key()]){
         return;
       }
@@ -43,7 +53,7 @@ class MessageStore extends EventEmitter {
       msgVal.ago = moment(new Date(msgVal.date)).fromNow();
       this.messages[msg.key()] = msgVal;
       this.emit(CHANGE_EVENT);
-    });
+    }).bind(this));
   }
 
   registerWithDispatcher(){

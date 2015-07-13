@@ -19,7 +19,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-          auth: false
+          auth: AuthStore.getAuthInfo()
         }
     }
 
@@ -61,7 +61,6 @@ class App extends React.Component {
 
     render(){
         let view = <Login />;
-        debugger;
         if(this.state.user){
           view = (
             <div>
@@ -70,7 +69,7 @@ class App extends React.Component {
                 flexFlow: 'row wrap',
                 maxWidth: 1200,
                 width: '100%',
-                margin: '100px auto 30px'
+                margin: '0px auto 30px'
               }}>
 
                 <ChannelList auth={this.state.auth} />

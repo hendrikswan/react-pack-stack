@@ -4,11 +4,13 @@ var AppConstants = require('../constants');
 var Firebase = require('Firebase');
 var CHANGE_EVENT = 'change';
 var AuthStore = require('./AuthStore');
+var _ = require('lodash');
 
 
 class ChannelStore extends EventEmitter {
   constructor(){
     super();
+    debugger;
     this.channelsRef = new Firebase('https://fiery-torch-9637.firebaseio.com/channels');
     this.registerWithDispatcher();
     AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
@@ -38,8 +40,9 @@ class ChannelStore extends EventEmitter {
   registerWithDispatcher(){
     this.dispatchToken = AppDispatcher.register((action)=>{
       switch(action.actionType){
-        case AppConstants.CHANNEL_SELECT:
+        case AppConstants.CHANNEL_OPEN:
           var channel = action.channel;
+          this.selectChannel(channel);
           //should we do something?
           break;
       }
@@ -55,8 +58,29 @@ class ChannelStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
+  selectChannel(channel){
+    this.selectedChannel = channel;
+    _(this.channels)
+      .keys()
+      .each((k)=> {
+        let c = this.channels[k];
+        c.selected = false;
+
+        if(c == channel){
+          c.selected = true;
+        }
+      })
+      .value();
+
+      this.emit(CHANGE_EVENT);
+  }
+
   getChannels(){
     return this.channels;
+  }
+
+  getSelectedChannel(){
+    return this.selectedChannel;
   }
 }
 

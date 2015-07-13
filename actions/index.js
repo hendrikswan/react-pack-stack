@@ -21,6 +21,13 @@ class Actions {
       actionType: AppConstants.AUTH_START
     });
   }
+
+  openChannel(channel){
+    AppDispatcher.dispatch({
+      actionType: AppConstants.CHANNEL_OPEN,
+      channel: channel
+    });
+  }
 }
 
 module.exports = new Actions();

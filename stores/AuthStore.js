@@ -9,6 +9,7 @@ class AuthStore extends EventEmitter {
     super();
     this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com');
     this.registerWithDispatcher();
+    this.authInfo = JSON.parse(localStorage.getItem('auth'));
   }
 
   registerWithDispatcher(){
@@ -28,6 +29,7 @@ class AuthStore extends EventEmitter {
         error: error
       };
 
+      localStorage.setItem('auth', JSON.stringify(authData));
       this.emit(CHANGE_EVENT);
     });
   }

@@ -1,6 +1,7 @@
 var React = require('react');
 var mui = require('material-ui');
 var ChannelStore = require('../../stores/ChannelStore');
+var Channel = require('../Channel/Channel.jsx');
 var _ = require('lodash');
 
 var {
@@ -37,6 +38,10 @@ class ChannelList extends React.Component {
       });
     }
 
+    onClick(){
+      Actions.openChannel();
+    }
+
 
     componentWillMount(){
         ChannelStore.addChangeListener(this.onChange.bind(this));
@@ -57,16 +62,14 @@ class ChannelList extends React.Component {
             );
         }
 
-        var channels = this.state.channels;
-        var channelNodes = _(channels)
+        let channels = this.state.channels;
+        let channelNodes = _(channels)
         .keys()
-        .map(function (k) {
-            var channel = channels[k];
+        .map((k)=>  {
+            let channel = channels[k];
+            channel.key = k;
             return (
-              <ListItem
-                key={k}>
-                {channel.name}
-              </ListItem>
+              <Channel channel={channel} />
             );
         })
         .value();
@@ -80,7 +83,6 @@ class ChannelList extends React.Component {
                 {{channelNodes}}
               </List>
             </Card>
-
         );
     }
 }
