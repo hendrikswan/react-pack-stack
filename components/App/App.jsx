@@ -9,6 +9,7 @@ let Colors = mui.Styles.Colors;
 
 require('./App.scss');
 var MessageList = require('../MessageList/MessageList.jsx');
+var ChannelList = require('../ChannelList/ChannelList.jsx');
 var MessageBox = require('../MessageBox/MessageBox.jsx');
 var Login = require('../Login/Login.jsx');
 
@@ -49,7 +50,17 @@ class App extends React.Component {
         //if(this.state.auth){
           view = (
             <div>
-              <MessageList auth={this.state.auth} />
+              <div style={{
+                display: 'flex',
+                flexFlow: 'row wrap',
+                maxWidth: 1200,
+                width: '100%',
+                margin: '100px auto 30px'
+              }}>
+
+                <ChannelList auth={this.state.auth} />
+                <MessageList auth={this.state.auth} />
+              </div>
               <MessageBox auth={this.state.auth} />
             </div>
           );
@@ -58,9 +69,12 @@ class App extends React.Component {
         return (
             <div>
                 <AppBar style={{
-                  position: 'fixed',
-                  top: 0
-                }} title='Acme Chat' />
+                    position: 'fixed',
+                    top: 0
+                  }}
+                  title='Acme Chat'
+                  showMenuIconButton={false}
+                />
                 {{view}}
             </div>
         );

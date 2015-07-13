@@ -23,7 +23,7 @@ class MessageList extends React.Component {
         super(props);
 
         this.state= {
-            messages: [],
+            messages: {},
             loading: true
         };
     }
@@ -63,9 +63,15 @@ class MessageList extends React.Component {
     }
 
     render(){
+        var cardStyle= {
+          flexGrow: 2,
+          marginLeft: 30
+        };
+
+
         if(this.state.loading){
             return (
-            <Card className="MessageList">
+            <Card className="MessageList" style={cardStyle}>
               <CircularProgress mode="indeterminate" style={{
                 paddingTop: '20px',
                 paddingBottom: '20px',
@@ -90,7 +96,7 @@ class MessageList extends React.Component {
         .value();
 
         return (
-            <Card className="MessageList">
+            <Card className="MessageList" style={cardStyle}>
               <CardText>You have {this.state.unreadCount} unread messages.</CardText>
               <List>
               {{messageNodes}}

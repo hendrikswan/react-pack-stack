@@ -48,7 +48,7 @@ class Store extends EventEmitter {
   }
 
   registerWithDispatcher(){
-    AppDispatcher.register((action)=>{
+    this.dispatchToken = AppDispatcher.register((action)=>{
       switch(action.actionType){
         case AppConstants.CHAT_SEND_MESSAGE:
           var message = action.message;
