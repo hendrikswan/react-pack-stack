@@ -12,7 +12,8 @@ class ChannelStore extends EventEmitter {
     super();
     this.channelsRef = new Firebase('https://fiery-torch-9637.firebaseio.com/channels');
     this.registerWithDispatcher();
-    AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
+    //AuthStore.addChangeListener(this.registerWithFirebase.bind(this));
+    this.registerWithFirebase();
   }
 
 
