@@ -6,7 +6,7 @@ var CHANGE_EVENT = 'change';
 var AuthStore = require('./AuthStore');
 
 
-class Store extends EventEmitter {
+class ChannelStore extends EventEmitter {
   constructor(){
     super();
     this.channelsRef = new Firebase('https://fiery-torch-9637.firebaseio.com/channels');
@@ -19,20 +19,19 @@ class Store extends EventEmitter {
     this.channels = {};
 
     this.channelsRef.once("value", (dataSnapshot) => {
-      debugger;
       this.channels = dataSnapshot.val();
       this.emit(CHANGE_EVENT);
+    });
 
-      this.messagesRef.on("child_added", (channel) => {
-        if(this.channels[channel.key()]){
-          return;
-        }
+    this.channelsRef.on("child_added", (channel) => {
+      if(this.channels[channel.key()]){
+        return;
+      }
 
 
-        let channelVal = channel.val()
-        this.channels[channel.key()] = channelVal;
-        this.emit(CHANGE_EVENT);
-      });
+      let channelVal = channel.val()
+      this.channels[channel.key()] = channelVal;
+      this.emit(CHANGE_EVENT);
     });
   }
 
@@ -62,4 +61,4 @@ class Store extends EventEmitter {
 }
 
 
-module.exports = new Store();
+module.exports = new ChannelStore();

@@ -4,7 +4,7 @@ var AppConstants = require('../constants');
 var Firebase = require('Firebase');
 var CHANGE_EVENT = 'change';
 
-class Store extends EventEmitter {
+class AuthStore extends EventEmitter {
   constructor(){
     super();
     this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com');
@@ -45,4 +45,4 @@ class Store extends EventEmitter {
   }
 }
 
-module.exports = new Store();
+module.exports = new AuthStore();

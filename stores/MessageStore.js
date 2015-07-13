@@ -7,7 +7,7 @@ var CHANGE_EVENT = 'change';
 var _ = require('lodash');
 var AuthStore = require('./AuthStore');
 
-class Store extends EventEmitter {
+class MessageStore extends EventEmitter {
   constructor(){
     super();
     this.messagesRef = new Firebase('https://fiery-torch-9637.firebaseio.com/messages');
@@ -18,6 +18,7 @@ class Store extends EventEmitter {
 
   registerWithFirebase(){
     this.messages = {};
+    this.authInfo = AuthStore.getAuthInfo();
 
     this.messagesRef.once("value", (dataSnapshot) => {
       this.messages = dataSnapshot.val();
@@ -30,18 +31,18 @@ class Store extends EventEmitter {
         .value();
 
       this.emit(CHANGE_EVENT);
+    });
 
-      this.messagesRef.on("child_added", (msg) => {
-        if(this.messages[msg.key()]){
-          return;
-        }
+    this.messagesRef.on("child_added", (msg) => {
+      if(this.messages[msg.key()]){
+        return;
+      }
 
 
-        let msgVal = msg.val()
-        msgVal.ago = moment(new Date(msgVal.date)).fromNow();
-        this.messages[msg.key()] = msgVal;
-        this.emit(CHANGE_EVENT);
-      });
+      let msgVal = msg.val()
+      msgVal.ago = moment(new Date(msgVal.date)).fromNow();
+      this.messages[msg.key()] = msgVal;
+      this.emit(CHANGE_EVENT);
     });
   }
 
@@ -75,11 +76,13 @@ class Store extends EventEmitter {
   }
 
   sendMessage(message){
+
     this.messagesRef.push({
         "message": message,
         "date": new Date().toUTCString(),
-        "author": "Hendrik Swanepoel",
-        "profilePic": "http://www.gravatar.com/avatar/a424e1b0ab3a8dee82c25ae0f0804107?s=48&d=identicon"
+        "author": this.authInfo.user.google.displayName,
+        "userId": this.authInfo.user.uid,
+        "profilePic": this.authInfo.user.google.profileImageURL
     });
   }
 
@@ -102,4 +105,4 @@ class Store extends EventEmitter {
 }
 
 
-module.exports = new Store();
+module.exports = new MessageStore();
