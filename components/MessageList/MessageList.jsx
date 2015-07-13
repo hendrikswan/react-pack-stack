@@ -28,19 +28,8 @@ class MessageList extends React.Component {
         };
     }
 
-    componentWillUpdate() {
-      var node = React.findDOMNode (this);
-      this.shouldScrollBottom = this.firstLoad ||
-        $(window).scrollTop() + $(window).height() === $(document).height();
-      if(this.firstLoad){
-        this.firstLoad = false;
-      }
-    }
-
     componentDidUpdate() {
-      if (this.shouldScrollBottom) {
         $('html, body').scrollTop( $(document).height());
-      }
     }
 
     componentWillUnmount() {
