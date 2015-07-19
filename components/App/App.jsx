@@ -1,27 +1,30 @@
-var React = require('react');
-var mui = require('material-ui');
+import React from 'react';
+import mui from 'material-ui';
+import connectToStores from 'alt/utils/connectToStores';
+import ChatStore from '../../stores/ChatStore';
+import Login from '../Login/Login.jsx'
+
 var {
     AppBar
 } = mui;
 
 var ThemeManager = new mui.Styles.ThemeManager();
-let Colors = mui.Styles.Colors;
+var Colors = mui.Styles.Colors;
 
-require('./App.scss');
-var MessageList = require('../MessageList/MessageList.jsx');
-var ChannelList = require('../ChannelList/ChannelList.jsx');
-var MessageBox = require('../MessageBox/MessageBox.jsx');
-var Login = require('../Login/Login.jsx');
-var AuthStore = require('../../stores/AuthStore');
-
+@connectToStores
 class App extends React.Component {
-    constructor(props){
-        super(props);
 
-        this.state = {
-          auth: AuthStore.getAuthInfo()
-        }
+    static getStores(){
+      return [ChatStore];
     }
+
+    static getPropsFromStores(){
+      return ChatStore.getState();
+    }
+
+    static childContextTypes = {
+        muiTheme: React.PropTypes.object
+    };
 
 
     getChildContext() {
@@ -37,47 +40,35 @@ class App extends React.Component {
           primary3Color: Colors.blue100,
           accent1Color: Colors.pink400
         });
-
-        AuthStore.addChangeListener(this.getAuthChangeHandler());
-    }
-
-
-    componentWillUnmount() {
-        AuthStore.removeChangeListener(this.getAuthChangeHandler());
-    }
-
-
-    getAuthChangeHandler(){
-      this.authChangeHandler = this.authChangeHandler || (function(){
-        var authInfo = AuthStore.getAuthInfo();
-        this.setState({
-          auth: authInfo
-        })
-      }).bind(this);
-
-      return this.authChangeHandler;
     }
 
     render(){
         let view = <Login />;
-        if(this.state.auth){
-          view = (
-            <div>
-              <div style={{
-                display: 'flex',
-                flexFlow: 'row wrap',
-                maxWidth: 1200,
-                width: '100%',
-                margin: '0px auto 30px'
-              }}>
 
-                <ChannelList auth={this.state.auth} />
-                <MessageList auth={this.state.auth} />
-              </div>
-              <MessageBox auth={this.state.auth} />
-            </div>
+        if(this.props.user){
+          view = (
+            <p>Hello!!!</p>
           );
         }
+
+        // if(this.state.auth){
+        //   view = (
+        //     <div>
+        //       <div style={{
+        //         display: 'flex',
+        //         flexFlow: 'row wrap',
+        //         maxWidth: 1200,
+        //         width: '100%',
+        //         margin: '0px auto 30px'
+        //       }}>
+        //
+        //         <ChannelList auth={this.state.auth} />
+        //         <MessageList auth={this.state.auth} />
+        //       </div>
+        //       <MessageBox auth={this.state.auth} />
+        //     </div>
+        //   );
+        // }
 
         return (
             <div style={{
@@ -96,8 +87,7 @@ class App extends React.Component {
     }
 }
 
-App.childContextTypes = {
-    muiTheme: React.PropTypes.object
-};
+//App = connectToStores(App);
+
 
 React.render(<App  />, document.getElementById('container'));
