@@ -2,8 +2,7 @@ import React from 'react';
 import mui from 'material-ui';
 import Actions from '../../actions';
 import './Login.scss';
-import ChatStore from '../../stores/ChatStore';
-import connectToStores from 'alt/utils/connectToStores';
+
 var {
     Card,
     CardText,
@@ -11,15 +10,7 @@ var {
 } = mui;
 
 
-@connectToStores
 class Login extends React.Component {
-    static getStores(){
-      return [ChatStore];
-    }
-
-    static getPropsFromStores(){
-      return ChatStore.getState();
-    }
 
     onClick(){
       Actions.login();
@@ -35,8 +26,6 @@ class Login extends React.Component {
               <RaisedButton style={{
                 display: 'block',
               }} onClick={this.onClick.bind(this)} label="Log in with Google" primary={true} />
-
-
             </Card>
 
         );

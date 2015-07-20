@@ -1,6 +1,5 @@
 var React = require('react');
 var mui = require('material-ui');
-var ChannelStore = require('../../stores/ChannelStore');
 var Channel = require('../Channel/Channel.jsx');
 var _ = require('lodash');
 
@@ -15,27 +14,30 @@ var {
     CardTitle
 } = mui;
 
+import connectToStores from 'alt/utils/connectToStores';
+import ChatStore from '../../stores/ChatStore';
 
 
+@connectToStores
 class ChannelList extends React.Component {
     constructor(props){
         super(props);
 
-        this.state= {
-            channels: {},
-            loading: true
+        this.state = {
+            channels: null
         };
+
+        console.log('channel list constructed');
+
+        ChatStore.getChannels();
     }
 
-    componentWillUnmount() {
-      ChannelStore.removeChangeListener(this.onChange);
+    static getStores(){
+      return [ChatStore];
     }
 
-    onChange(){
-      this.setState({
-        channels: ChannelStore.getChannels(),
-        loading: false
-      });
+    static getPropsFromStores(){
+      return ChatStore.getState();
     }
 
     onClick(){
@@ -43,19 +45,20 @@ class ChannelList extends React.Component {
     }
 
 
-    componentWillMount(){
-      var channels = ChannelStore.getChannels();
-      if(channels){
-        this.setState({
-          channels: channels,
-          loading: false
-        });
-      }
-      ChannelStore.addChangeListener(this.onChange.bind(this));
-    }
+    // componentWillMount(){
+    //   // var channels = ChannelStore.getChannels();
+    //   // if(channels){
+    //   //   this.setState({
+    //   //     channels: channels,
+    //   //     loading: false
+    //   //   });
+    //   // }
+    //   // ChannelStore.addChangeListener(this.onChange.bind(this));
+    //   console.log('channel list will mount')
+    // }
 
     render(){
-        if(this.state.loading){
+        if(!this.props.channels){
             return (
               <Card style={{
                 flexGrow: 1
@@ -71,7 +74,7 @@ class ChannelList extends React.Component {
             );
         }
 
-        let channels = this.state.channels;
+        let channels = this.props.channels;
         let channelNodes = _(channels)
         .keys()
         .map((k)=>  {

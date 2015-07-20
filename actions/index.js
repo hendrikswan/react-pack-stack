@@ -1,26 +1,31 @@
 import alt from '../alt';
 import AuthService from '../Services/AuthService';
+import ChannelService from '../Services/ChannelService';
 
 class Actions {
   //there are more explicit ways of defining functions - show steps
   constructor(){
-    this.generateActions('handleLoginFailure');
+    this.generateActions('channelsReceived', 'channelsFailed');
   }
 
   login(){
-    debugger;
     return (dispatch)=> {
       AuthService.startAuth()
         .then((result)=> {
           dispatch(result);
-        })
-        .catch((error)=> {
-          this.handleLoginFailure();
+          this.initChannels();
         });
     }
   }
 
-
+  // initChannels(){
+  //   return (dispatch)=> {
+  //     ChannelService.initChannels()
+  //       .then((result)=> {
+  //         dispatch(result);
+  //       });
+  //   }
+  // }
 }
 
 export default alt.createActions(Actions);

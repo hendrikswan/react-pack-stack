@@ -3,6 +3,8 @@ import mui from 'material-ui';
 import connectToStores from 'alt/utils/connectToStores';
 import ChatStore from '../../stores/ChatStore';
 import Login from '../Login/Login.jsx'
+import ChannelList from '../ChannelList/ChannelList.jsx'
+
 
 var {
     AppBar
@@ -47,28 +49,20 @@ class App extends React.Component {
 
         if(this.props.user){
           view = (
-            <p>Hello!!!</p>
+            <div>
+              <div style={{
+                display: 'flex',
+                flexFlow: 'row wrap',
+                maxWidth: 1200,
+                width: '100%',
+                margin: '0px auto 30px'
+              }}>
+
+                <ChannelList />
+              </div>
+            </div>
           );
         }
-
-        // if(this.state.auth){
-        //   view = (
-        //     <div>
-        //       <div style={{
-        //         display: 'flex',
-        //         flexFlow: 'row wrap',
-        //         maxWidth: 1200,
-        //         width: '100%',
-        //         margin: '0px auto 30px'
-        //       }}>
-        //
-        //         <ChannelList auth={this.state.auth} />
-        //         <MessageList auth={this.state.auth} />
-        //       </div>
-        //       <MessageBox auth={this.state.auth} />
-        //     </div>
-        //   );
-        // }
 
         return (
             <div style={{
