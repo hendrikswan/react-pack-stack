@@ -4,6 +4,7 @@ import connectToStores from 'alt/utils/connectToStores';
 import ChatStore from '../../stores/ChatStore';
 import Login from '../Login/Login.jsx'
 import ChannelList from '../ChannelList/ChannelList.jsx'
+import MessageList from '../MessageList/MessageList.jsx'
 
 
 var {
@@ -59,6 +60,7 @@ class App extends React.Component {
               }}>
 
                 <ChannelList />
+                <MessageList />
               </div>
             </div>
           );

@@ -5,7 +5,12 @@ import ChannelService from '../Services/ChannelService';
 class Actions {
   //there are more explicit ways of defining functions - show steps
   constructor(){
-    this.generateActions('channelsReceived', 'channelsFailed');
+    this.generateActions(
+      'channelsReceived',
+      'channelsFailed',
+      'messagesReceived',
+      'messagesFailed'
+    );
   }
 
   login(){

@@ -2,9 +2,10 @@ var React = require('react');
 var mui = require('material-ui');
 var _ = require('lodash');
 var $ = require('webpack-zepto');
-var MessageStore = require('../../stores/MessageStore');
 require('./MessageList.scss');
 var Message = require('../Message/Message.jsx');
+import connectToStores from 'alt/utils/connectToStores';
+import ChatStore from '../../stores/ChatStore';
 
 var {
     Card,
@@ -17,45 +18,22 @@ var {
 } = mui;
 
 
-
+@connectToStores
 class MessageList extends React.Component {
     constructor(props){
         super(props);
-
-        this.state= {
-            messages: {},
-            loading: true
-        };
     }
 
     componentDidUpdate() {
         $('html, body').scrollTop( $(document).height());
     }
 
-    componentWillUnmount() {
-      MessageStore.removeChangeListener(this.onChange);
+    static getStores(){
+      return [ChatStore];
     }
 
-    onChange(){
-      this.firstLoad = this.state.loading;
-
-      this.setState({
-        messages: MessageStore.getMessages(),
-        unreadCount: MessageStore.getUnreadCount(),
-        loading: false
-      });
-    }
-
-
-    componentWillMount(){
-      var messages = MessageStore.getMessages();
-      if(messages){
-        this.setState({
-          messages: messages,
-          loading: false
-        });
-      }
-      MessageStore.addChangeListener(this.onChange.bind(this)); //will it unbind correctly then?
+    static getPropsFromStores(){
+      return ChatStore.getState();
     }
 
     render(){
@@ -65,7 +43,7 @@ class MessageList extends React.Component {
         };
 
 
-        if(this.state.loading){
+        if(!this.props.messages){
             return (
             <Card className="MessageList" style={cardStyle}>
               <CircularProgress mode="indeterminate" style={{
@@ -79,7 +57,7 @@ class MessageList extends React.Component {
             );
         }
 
-        var messages = this.state.messages;
+        var messages = this.props.messages;
         var messageNodes = _(messages)
         .values()
         .map(function (message) {

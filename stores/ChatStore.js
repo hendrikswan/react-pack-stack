@@ -1,11 +1,12 @@
 import alt from '../alt';
 import Actions from '../actions';
 import AuthService from '../Services/AuthService';
-import ChannelDataSource from './ChannelDataSource';
+import ChannelSource from '../sources/ChannelSource';
+import MessageSource from '../sources/MessageSource';
 import {datasource, decorate, bind} from 'alt/utils/decorators';
 import _ from 'lodash';
 
-@datasource(ChannelDataSource)
+@datasource(MessageSource, ChannelSource)
 @decorate(alt) //why is this necessary?
 class ChatStore {
   constructor(){
@@ -35,8 +36,24 @@ class ChatStore {
       })
       .value();
     this.setState({
-      channels: channels,
-      selectedChannel: selectedChannel
+      channels,
+      selectedChannel
+    });
+
+    this.getInstance().getMessages();
+  }
+
+  @bind(Actions.messagesReceived)
+  receivedMessages(messages) {
+    _(messages)
+      .keys()
+      .each((k)=> {
+        messages[k].key = k;
+      })
+      .value();
+
+    this.setState({
+      messages
     });
   }
 

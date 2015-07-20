@@ -1,7 +1,7 @@
 var Actions = require('../actions');
 var firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/channels');
 
-var ChannelDataSource = {
+var ChannelSource = {
   getChannels: {
     remote(state){
       return new Promise((resolve, reject) => {
@@ -17,4 +17,4 @@ var ChannelDataSource = {
   }
 }
 
-export default ChannelDataSource;
+export default ChannelSource;

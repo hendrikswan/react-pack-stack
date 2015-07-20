@@ -2,6 +2,8 @@ var React = require('react');
 var mui = require('material-ui');
 var Channel = require('../Channel/Channel.jsx');
 var _ = require('lodash');
+import connectToStores from 'alt/utils/connectToStores';
+import ChatStore from '../../stores/ChatStore';
 
 var {
     Card,
@@ -14,8 +16,7 @@ var {
     CardTitle
 } = mui;
 
-import connectToStores from 'alt/utils/connectToStores';
-import ChatStore from '../../stores/ChatStore';
+
 
 
 @connectToStores
