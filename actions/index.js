@@ -10,7 +10,8 @@ class Actions {
       'channelsFailed',
       'messagesReceived',
       'messagesFailed',
-      'messageReceived'
+      'messageReceived',
+      'openChannel'
     );
   }
 

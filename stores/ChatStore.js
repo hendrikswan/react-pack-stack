@@ -10,10 +10,7 @@ import moment from 'moment';
 @datasource(MessageSource, ChannelSource)
 @decorate(alt) //why is this necessary?
 class ChatStore {
-  constructor(){
-    this.bindListeners({
-      login: Actions.login
-    });
+  constructor(){;
 
     this.state = {
       user: AuthService.getUser(),
@@ -39,6 +36,30 @@ class ChatStore {
     this.setState({
       channels,
       selectedChannel
+    });
+
+    this.getInstance().getMessages();
+  }
+
+  @bind(Actions.openChannel)
+  openChannel(channel){
+    let selectedChannel;
+    _(this.state.channels)
+      .keys()
+      .each((k)=> {
+        let c = this.state.channels[k];
+        c.selected = false;
+
+        if(c == channel){
+          c.selected = true;
+          selectedChannel = c;
+        }
+      })
+      .value();
+
+    this.setState({
+      selectedChannel,
+      channels: this.state.channels
     });
 
     this.getInstance().getMessages();
@@ -78,6 +99,9 @@ class ChatStore {
     });
   }
 
+
+
+  @bind(Actions.login)
   login(user){
     this.setState({
       user: user
