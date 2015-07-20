@@ -1,8 +1,8 @@
 var React = require('react');
 var mui = require('material-ui');
 var trim = require('trim');
-var Firebase = require('Firebase');
 var AppActions = require('../../actions');
+import ChatStore from '../../stores/ChatStore';
 
 var {
     Card,

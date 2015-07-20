@@ -3,6 +3,27 @@ var Actions = require('../actions');
 let firebaseRef  = null;
 
 let MessageSource = {
+  sendMessage: {
+    remote(state){
+      return new Promise((resolve, reject)=> {
+        console.log('in remote for send message');
+        if(!firebaseRef){
+          return resolve();
+        }
+
+        firebaseRef.push({
+            "message": state.message,
+            "date": new Date().toUTCString(),
+            "author": state.user.google.displayName,
+            "userId": state.user.uid,
+            "profilePic": state.user.google.profileImageURL
+        });
+        resolve();
+      });
+    },
+    success: Actions.messageSent,
+    error: Actions.messageSendFailed
+  },
   getMessages: {
     remote(state){
 

@@ -5,6 +5,7 @@ import ChatStore from '../../stores/ChatStore';
 import Login from '../Login/Login.jsx'
 import ChannelList from '../ChannelList/ChannelList.jsx'
 import MessageList from '../MessageList/MessageList.jsx'
+import MessageBox from '../MessageBox/MessageBox.jsx'
 
 
 var {
@@ -62,6 +63,8 @@ class App extends React.Component {
                 <ChannelList />
                 <MessageList />
               </div>
+
+              <MessageBox />              
             </div>
           );
         }

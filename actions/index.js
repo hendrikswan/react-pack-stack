@@ -1,6 +1,5 @@
 import alt from '../alt';
 import AuthService from '../Services/AuthService';
-import ChannelService from '../Services/ChannelService';
 
 class Actions {
   //there are more explicit ways of defining functions - show steps
@@ -12,7 +11,10 @@ class Actions {
       'messagesFailed',
       'messageReceived',
       'openChannel',
-      'messagesLoading'
+      'messagesLoading',
+      'sendMessage',
+      'messageSent',
+      'messageSendFailed'
     );
   }
 

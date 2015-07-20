@@ -21,6 +21,13 @@ class ChatStore {
     };
   }
 
+  @bind(Actions.sendMessage)
+  sendMessage(message){
+    console.log('in send message in store');
+    this.state.message = message;
+    setTimeout(this.getInstance().sendMessage, 10);
+  }
+
   @bind(Actions.channelsReceived)
   receivedChannels(channels) {
     let selectedChannel;
@@ -83,6 +90,7 @@ class ChatStore {
 
   @bind(Actions.messagesReceived)
   receivedMessages(messages) {
+
     _(messages)
       .keys()
       .each((k)=> {
@@ -91,7 +99,7 @@ class ChatStore {
       .value();
 
     this.setState({
-      messages,
+      messages: messages,
       messagesLoading: false
     });
   }
