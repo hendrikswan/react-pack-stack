@@ -107,7 +107,7 @@ class ChatStore {
     this.state.messages[msg.key] = msg;
 
     this.setState({
-      messages: this.steate
+      messages: this.state.messages
     });
   }
 
