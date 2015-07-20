@@ -43,7 +43,7 @@ class MessageList extends React.Component {
         };
 
 
-        if(!this.props.messages){
+        if(this.props.messagesLoading){
             return (
             <Card className="MessageList" style={cardStyle}>
               <CircularProgress mode="indeterminate" style={{

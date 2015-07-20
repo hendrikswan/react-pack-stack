@@ -16,7 +16,8 @@ class ChatStore {
       user: AuthService.getUser(),
       channels: null,
       messages: null,
-      selectedChannel: null
+      selectedChannel: null,
+      messagesLoading: true
     };
   }
 
@@ -33,12 +34,13 @@ class ChatStore {
         }
       })
       .value();
+
     this.setState({
       channels,
       selectedChannel
     });
 
-    this.getInstance().getMessages();
+    setTimeout(this.getInstance().getMessages, 10);
   }
 
   @bind(Actions.openChannel)
@@ -62,12 +64,21 @@ class ChatStore {
       channels: this.state.channels
     });
 
-    this.getInstance().getMessages();
+    setTimeout(this.getInstance().getMessages, 10);
   }
 
   _prepMsg(msg, key){
     msg.key = key;
     msg.ago = moment(new Date(msg.date)).fromNow();
+  }
+
+  @bind(Actions.messagesLoading)
+  handleMessagesLoading() {
+    this.setState({
+      messagesLoading: true
+    });
+
+    console.log('messages are loading');
   }
 
   @bind(Actions.messagesReceived)
@@ -80,7 +91,8 @@ class ChatStore {
       .value();
 
     this.setState({
-      messages
+      messages,
+      messagesLoading: false
     });
   }
 

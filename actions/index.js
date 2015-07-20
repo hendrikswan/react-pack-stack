@@ -11,7 +11,8 @@ class Actions {
       'messagesReceived',
       'messagesFailed',
       'messageReceived',
-      'openChannel'
+      'openChannel',
+      'messagesLoading'
     );
   }
 
