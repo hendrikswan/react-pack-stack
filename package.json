@@ -28,7 +28,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack-dev-server --hot  --progress --colors"
+    "watch": "webpack-dev-server  --progress --colors"
   },
   "author": "",
   "license": "ISC"
