@@ -1,4 +1,5 @@
-var Actions = require('../actions');
+import Actions from '../actions';
+
 var firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com/channels');
 
 var ChannelSource = {

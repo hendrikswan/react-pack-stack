@@ -1,8 +1,8 @@
-var Firebase = require('Firebase');
+import Firebase from 'Firebase';
 
 
 class AuthService {
-  
+
   constructor(){
     this.firebaseRef = new Firebase('https://fiery-torch-9637.firebaseio.com');
 

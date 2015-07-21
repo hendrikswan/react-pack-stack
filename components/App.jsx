@@ -7,6 +7,7 @@ import ChannelList from './ChannelList.jsx';
 import MessageList from './MessageList.jsx';
 import MessageBox from './MessageBox.jsx';
 
+require('../style/app.scss');
 
 var {
     AppBar
