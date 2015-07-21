@@ -2,10 +2,10 @@ import React from 'react';
 import mui from 'material-ui';
 import connectToStores from 'alt/utils/connectToStores';
 import ChatStore from '../../stores/ChatStore';
-import Login from '../Login/Login.jsx'
-import ChannelList from '../ChannelList/ChannelList.jsx'
-import MessageList from '../MessageList/MessageList.jsx'
-import MessageBox from '../MessageBox/MessageBox.jsx'
+import Login from '../Login/Login.jsx';
+import ChannelList from '../ChannelList/ChannelList.jsx';
+import MessageList from '../MessageList/MessageList.jsx';
+import MessageBox from '../MessageBox/MessageBox.jsx';
 
 
 var {
@@ -64,7 +64,7 @@ class App extends React.Component {
                 <MessageList />
               </div>
 
-              <MessageBox />              
+              <MessageBox />
             </div>
           );
         }
