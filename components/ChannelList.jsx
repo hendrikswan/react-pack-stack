@@ -1,9 +1,9 @@
-var React = require('react');
-var mui = require('material-ui');
-var Channel = require('../Channel/Channel.jsx');
-var _ = require('lodash');
+import React from 'react';
+import mui from 'material-ui';
+import Channel from './Channel.jsx';
+import _ from 'lodash';
 import connectToStores from 'alt/utils/connectToStores';
-import ChatStore from '../../stores/ChatStore';
+import ChatStore from '../stores/ChatStore';
 
 var {
     Card,

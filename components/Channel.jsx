@@ -1,7 +1,7 @@
-var React = require('react');
-var mui = require('material-ui');
-var _ = require('lodash');
-var Actions = require('../../actions');
+import React from 'react';
+import mui from 'material-ui';
+import _ from 'lodash';
+import Actions from '../actions';
 
 var {
     Card,

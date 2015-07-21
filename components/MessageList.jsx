@@ -1,11 +1,11 @@
-var React = require('react');
-var mui = require('material-ui');
-var _ = require('lodash');
-var $ = require('webpack-zepto');
-require('./MessageList.scss');
-var Message = require('../Message/Message.jsx');
+import React from 'react';
+import mui from 'material-ui';
+import _ from 'lodash';
+import $ from 'webpack-zepto';
+import Message from './Message.jsx';
 import connectToStores from 'alt/utils/connectToStores';
-import ChatStore from '../../stores/ChatStore';
+import ChatStore from '../stores/ChatStore';
+//require('./MessageList.scss');
 
 var {
     Card,

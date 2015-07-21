@@ -1,7 +1,7 @@
 import React from 'react';
 import mui from 'material-ui';
-import Actions from '../../actions';
-import './Login.scss';
+import Actions from '../actions';
+//import './Login.scss';
 
 var {
     Card,
@@ -19,8 +19,14 @@ class Login extends React.Component {
     render(){
 
         return (
-            <Card className="Login_card">
-              <CardText className="Login_copy">
+            <Card style={{
+              'maxWidth': '800px',
+              'margin': '30px auto',
+              'padding': '50px'
+            }}>
+              <CardText style={{
+                'textAlign': 'center'                
+              }}>
                 To start chatting away, please log in with your Google account.
               </CardText>
               <RaisedButton style={{
