@@ -3,7 +3,7 @@ import mui from 'material-ui';
 import ChannelList from './ChannelList.jsx';
 import MessageList from './MessageList.jsx';
 import MessageBox from './MessageBox.jsx';
-
+import ChatStore from '../stores/ChatStore';
 
 class Chat extends React.Component {
 
@@ -29,6 +29,13 @@ class Chat extends React.Component {
 
     static childContextTypes = {
       muiTheme: React.PropTypes.object
+    }
+
+    static willTransitionTo(transition){
+      var state = ChatStore.getState();
+      if(!state.user){
+        transition.redirect('/login');
+      }
     }
 }
 

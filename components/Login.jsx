@@ -10,9 +10,8 @@ var {
 
 
 class Login extends React.Component {
-
     onClick(){
-      Actions.login();
+      Actions.login(this.context.router);
     }
 
     render(){
@@ -35,11 +34,15 @@ class Login extends React.Component {
 
         );
     }
+
+
+    static contextTypes = {
+      router: React.PropTypes.func.isRequired
+    }
+
 }
 
-Login.childContextTypes = {
-    muiTheme: React.PropTypes.object
-};
+
 
 
 module.exports = Login;

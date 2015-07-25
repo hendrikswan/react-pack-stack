@@ -18,12 +18,13 @@ class Actions {
     );
   }
 
-  login(){
+  login(router){
     return (dispatch)=> {
       AuthService.startAuth()
         .then((result)=> {
           dispatch(result);
           // this.initChannels();
+          router.transitionTo('/chat');
         });
     }
   }
