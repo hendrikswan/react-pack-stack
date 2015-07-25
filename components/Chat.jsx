@@ -26,11 +26,11 @@ class Chat extends React.Component {
             </div>
         );
     }
+
+    static childContextTypes = {
+      muiTheme: React.PropTypes.object
+    }
 }
 
-//todo: do this with static props
-ChannelList.childContextTypes = {
-    muiTheme: React.PropTypes.object
-};
 
 export default Chat;

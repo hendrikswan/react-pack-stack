@@ -8,12 +8,13 @@ var DefaultRoute = Router.DefaultRoute;
 
 
 function checkUser(){
+  debugger;
   console.log('on enter!');
 }
 
 var routes = (
   <Route path="/" handler={App}>
-    <DefaultRoute handler={Chat}/>
+    <DefaultRoute handler={Chat} onEnter={checkUser}/>
     <Route path="chat" handler={Chat} />
     <Route path="login" handler={Login} onEnter={checkUser} />
   </Route>
