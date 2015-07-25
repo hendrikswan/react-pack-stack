@@ -1,7 +1,6 @@
 import React from 'react';
 import mui from 'material-ui';
 import Actions from '../actions';
-//import './Login.scss';
 
 var {
     Card,
@@ -25,7 +24,7 @@ class Login extends React.Component {
               'padding': '50px'
             }}>
               <CardText style={{
-                'textAlign': 'center'                
+                'textAlign': 'center'
               }}>
                 To start chatting away, please log in with your Google account.
               </CardText>

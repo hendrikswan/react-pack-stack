@@ -3,7 +3,6 @@ import mui from 'material-ui';
 import _ from 'lodash';
 import $ from 'webpack-zepto';
 import AppActions from '../actions';
-//require('./Message.scss');
 
 var {
     ListItem,

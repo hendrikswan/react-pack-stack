@@ -5,7 +5,6 @@ import $ from 'webpack-zepto';
 import Message from './Message.jsx';
 import connectToStores from 'alt/utils/connectToStores';
 import ChatStore from '../stores/ChatStore';
-//require('./MessageList.scss');
 
 var {
     Card,

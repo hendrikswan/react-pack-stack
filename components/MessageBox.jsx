@@ -10,7 +10,6 @@ var {
     TextField
 } = mui;
 
-//require('./MessageBox.scss');
 
 @Radium
 class MessageBox extends React.Component {
