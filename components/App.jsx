@@ -1,12 +1,7 @@
 import React from 'react';
 import mui from 'material-ui';
-import connectToStores from 'alt/utils/connectToStores';
-import ChatStore from '../stores/ChatStore';
-import Login from './Login.jsx';
-import ChannelList from './ChannelList.jsx';
-import MessageList from './MessageList.jsx';
-import MessageBox from './MessageBox.jsx';
-
+import Router from 'react-router';
+var RouteHandler = Router.RouteHandler;
 require('../style/app.scss');
 
 var {
@@ -16,17 +11,7 @@ var {
 var ThemeManager = new mui.Styles.ThemeManager();
 var Colors = mui.Styles.Colors;
 
-@connectToStores
 class App extends React.Component {
-
-    static getStores(){
-      return [ChatStore];
-    }
-
-    static getPropsFromStores(){
-      return ChatStore.getState();
-    }
-
     static childContextTypes = {
         muiTheme: React.PropTypes.object
     };
@@ -38,6 +23,7 @@ class App extends React.Component {
         };
     }
 
+    //this should be in the constructor
     componentWillMount() {
         ThemeManager.setPalette({
           primary1Color: Colors.blue500,
@@ -48,28 +34,6 @@ class App extends React.Component {
     }
 
     render(){
-        let view = <Login />;
-
-        if(this.props.user){
-          view = (
-            <div>
-              <div style={{
-                display: 'flex',
-                flexFlow: 'row wrap',
-                maxWidth: 1200,
-                width: '100%',
-                margin: '0px auto 30px'
-              }}>
-
-                <ChannelList />
-                <MessageList />
-              </div>
-
-              <MessageBox />
-            </div>
-          );
-        }
-
         return (
             <div style={{
               paddingTop: 100
@@ -81,7 +45,7 @@ class App extends React.Component {
                   title='Acme Chat'
                   showMenuIconButton={false}
                 />
-                {{view}}
+                <RouteHandler />
             </div>
         );
     }
@@ -90,4 +54,5 @@ class App extends React.Component {
 //App = connectToStores(App);
 
 
-React.render(<App  />, document.getElementById('container'));
+//React.render(<App  />, document.getElementById('container'));
+export default App;
