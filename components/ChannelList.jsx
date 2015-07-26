@@ -18,7 +18,6 @@ var {
 
 
 
-
 @connectToStores
 class ChannelList extends React.Component {
     constructor(props){
@@ -28,9 +27,7 @@ class ChannelList extends React.Component {
             channels: null
         };
 
-        console.log('channel list constructed');
 
-        ChatStore.getChannels();
     }
 
     static getStores(){
@@ -39,6 +36,11 @@ class ChannelList extends React.Component {
 
     static getPropsFromStores(){
       return ChatStore.getState();
+    }
+
+    componentDidMount(){
+      this.state.selectedChannelName = this.props.params.channel;
+      ChatStore.getChannels(this.props.params.channel);      
     }
 
     onClick(){

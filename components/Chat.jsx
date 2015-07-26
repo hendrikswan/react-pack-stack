@@ -7,36 +7,40 @@ import ChatStore from '../stores/ChatStore';
 
 class Chat extends React.Component {
 
-    render(){
-        return (
-            <div>
-              <div style={{
-                display: 'flex',
-                flexFlow: 'row wrap',
-                maxWidth: 1200,
-                width: '100%',
-                margin: '0px auto 30px'
-              }}>
+  componentDidMount(){
+        console.log('chat mounted - ', this.props.params.channel);
+  }
 
-                <ChannelList />
-                <MessageList />
-              </div>
+  render(){
+      return (
+          <div>
+            <div style={{
+              display: 'flex',
+              flexFlow: 'row wrap',
+              maxWidth: 1200,
+              width: '100%',
+              margin: '0px auto 30px'
+            }}>
 
-              <MessageBox />
+              <ChannelList {...this.props} />
+              <MessageList  />
             </div>
-        );
-    }
 
-    static childContextTypes = {
-      muiTheme: React.PropTypes.object
-    }
+            <MessageBox />
+          </div>
+      );
+  }
 
-    static willTransitionTo(transition){
-      var state = ChatStore.getState();
-      if(!state.user){
-        transition.redirect('/login');
-      }
+  static childContextTypes = {
+    muiTheme: React.PropTypes.object
+  }
+
+  static willTransitionTo(transition){
+    var state = ChatStore.getState();
+    if(!state.user){
+      transition.redirect('/login');
     }
+  }
 }
 
 

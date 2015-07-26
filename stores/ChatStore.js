@@ -30,13 +30,13 @@ class ChatStore {
 
   @bind(Actions.channelsReceived)
   receivedChannels(channels) {
+    debugger;
     let selectedChannel;
     _(channels)
       .keys()
       .each((k, i)=> {
         channels[k].key = k;
-        if(i == 0){
-          channels[k].selected = true;
+        if(channels[k].selected){
           selectedChannel = channels[k];
         }
       })
