@@ -7,17 +7,17 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 
 
-
 var routes = (
   <Route path="/" handler={App}>
     <DefaultRoute handler={Chat} />
+    <Route path="chat" handler={Chat} />
     <Route path="chat/:channel" handler={Chat} />
     <Route path="login" handler={Login} />
   </Route>
 );
 
 
-
+//HistoryLocation when we have our own server where we do iso stuff
 Router.run(routes, Router.HashLocation, (Root) => {
   React.render(<Root/>, document.getElementById('container'));
 });

@@ -8,7 +8,6 @@ import ChatStore from '../stores/ChatStore';
 class Chat extends React.Component {
 
   render(){
-    debugger;
       return (
           <div>
             <div style={{
@@ -23,7 +22,7 @@ class Chat extends React.Component {
               <MessageList  />
             </div>
 
-            <MessageBox />
+            <MessageBox  />
           </div>
       );
   }
