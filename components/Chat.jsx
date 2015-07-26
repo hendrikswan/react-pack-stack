@@ -8,6 +8,7 @@ import ChatStore from '../stores/ChatStore';
 class Chat extends React.Component {
 
   render(){
+    debugger;
       return (
           <div>
             <div style={{

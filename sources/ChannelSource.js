@@ -9,7 +9,8 @@ let ChannelSource = {
       return new Promise((resolve, reject) => {
         firebaseRef.once("value", (dataSnapshot) => {
           var channels = dataSnapshot.val();
-          var selectedChannel =channels[selectedChannelKey];
+          selectedChannelKey = selectedChannelKey || _.keys(channels)[0];
+          var selectedChannel =  channels[selectedChannelKey];
           if(selectedChannel){
             selectedChannel.selected = true;
           }

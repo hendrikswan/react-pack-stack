@@ -61,16 +61,7 @@ class MessageBox extends React.Component {
                 message: ''
             });
 
-
             AppActions.sendMessage(event.target.value);
-
-
-            // this.firebaseRef.push({
-            //     "message": event.target.value,
-            //     "date": new Date().toUTCString(),
-            //     "author": "Hendrik Swanepoel",
-            //     "profilePic": "http://www.gravatar.com/avatar/a424e1b0ab3a8dee82c25ae0f0804107?s=48&d=identicon"
-            // });
         }
     }
 }

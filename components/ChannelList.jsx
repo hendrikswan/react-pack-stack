@@ -26,8 +26,6 @@ class ChannelList extends React.Component {
         this.state = {
             channels: null
         };
-
-
     }
 
     static getStores(){
@@ -39,8 +37,15 @@ class ChannelList extends React.Component {
     }
 
     componentDidMount(){
-      this.state.selectedChannelName = this.props.params.channel;
-      ChatStore.getChannels(this.props.params.channel);      
+      this.state.selectedChannel = this.props.params.channel;
+      ChatStore.getChannels(this.props.params.channel);
+    }
+
+    componentWillReceiveProps(nextProps){
+      if(this.state.selectedChannel != nextProps.params.channel){
+        this.state.selectedChannel = nextProps.params.channel;
+        ChatStore.getChannels(nextProps.params.channel);
+      }
     }
 
     onClick(){

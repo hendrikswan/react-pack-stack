@@ -21,9 +21,9 @@ class Channel extends React.Component {
         super(props);
     }
 
-    onClick(){
-      Actions.openChannel(this.props.channel);
-    }
+    // onClick(){
+    //   Actions.openChannel(this.props.channel);
+    // }
 
 
     render(){
@@ -37,7 +37,8 @@ class Channel extends React.Component {
         <ListItem
           style={style}
           key={this.props.channel.key}
-          onClick={this.onClick.bind(this)}
+          //onClick={this.onClick.bind(this)}
+          href={'/#/chat/' + this.props.channel.key}
           >
           {this.props.channel.name}
         </ListItem>
