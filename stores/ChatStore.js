@@ -30,7 +30,6 @@ class ChatStore {
 
   @bind(Actions.channelsReceived)
   receivedChannels(channels) {
-    debugger;
     let selectedChannel;
     _(channels)
       .keys()

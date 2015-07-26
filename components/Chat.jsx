@@ -7,10 +7,6 @@ import ChatStore from '../stores/ChatStore';
 
 class Chat extends React.Component {
 
-  componentDidMount(){
-        console.log('chat mounted - ', this.props.params.channel);
-  }
-
   render(){
       return (
           <div>
@@ -33,13 +29,6 @@ class Chat extends React.Component {
 
   static childContextTypes = {
     muiTheme: React.PropTypes.object
-  }
-
-  static willTransitionTo(transition){
-    var state = ChatStore.getState();
-    if(!state.user){
-      transition.redirect('/login');
-    }
   }
 }
 
